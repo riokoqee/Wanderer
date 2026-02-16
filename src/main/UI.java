@@ -17,7 +17,7 @@ public class UI {
     Font jerseyR;
     BufferedImage heart_full, heart_half, heart_blank;
     public boolean messageOn = false;
-//    public String message = "";
+    //    public String message = "";
 //    int messageCounter = 0;
     ArrayList<String> message = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
@@ -25,6 +25,8 @@ public class UI {
     public String currentDialogue = "";
     public int commandNum = 0;
     int subState = 0;
+    public int slotCol = 0;
+    public int slotRow = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -85,6 +87,7 @@ public class UI {
         // CHARACTER STATE
         if (gp.gameState == gp.characterState) {
             drawCharacterScreen();
+            drawInventory();
         }
 
         // OPTIONS STATE
@@ -165,7 +168,7 @@ public class UI {
 
         // TITLE NAME
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
-        String text = "PLEASE 100 BALLOV";
+        String text = "WANDERER";
         int x = getXforCenteredText(text);
         int y = gp.tileSize*3;
 
@@ -597,6 +600,31 @@ public class UI {
                 commandNum = 4;
             }
         }
+    }
+
+    public void drawInventory() {
+
+        int frameX = gp.tileSize*9;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*6;
+        int frameHeight = gp.tileSize*5;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        // SLOT
+        final int slotXstart = frameX + 20;
+        final int slotYstart = frameY + 20;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+
+        // CURSOR
+        int cursorX = slotXstart + (gp.tileSize + slotCol);
+        int cursorY = slotYstart + (gp.tileSize + slotRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+
+        // DRAW CURSOR
+        g2.setColor(Color.white);
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
     }
 
     public void drawSubWindow(int x, int y, int width, int height) {
