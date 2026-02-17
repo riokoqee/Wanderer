@@ -149,7 +149,7 @@ public class Player extends Entity{
 
         // CHECK OBJECT COLLISION
         int objIndex = gp.cChecker.checkObject(this, true);
-        pickUpObject(objIndex);
+        pickUpObject(objIndex, 0);
 
         // CHECK NPC COLLISION
         int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -257,10 +257,21 @@ public class Player extends Entity{
 
     }
 
-    public void pickUpObject(int i) {
+    public void pickUpObject(int i, int mapNum) {
 
         if (i != 999) {
 
+            String text;
+
+            if (inventory.size() != maxInventorySize) {
+
+                inventory.add(gp.obj[mapNum][i]);
+                gp.playSE(1);
+                text = "Got a " + gp.obj[mapNum][i].name + "!";
+            }
+            else {
+                text = "You cannot carry anymore!";
+            }
         }
     }
 
