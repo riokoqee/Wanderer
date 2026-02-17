@@ -1,5 +1,6 @@
 package main;
 
+import data.SaveLoad;
 import entity.Player;
 import tile.TileManager;
 import entity.Entity;
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     Config config = new Config(this);
+    SaveLoad saveLoad = new SaveLoad(this);
     Thread gameThread;
 
     // ENTITY AND OBJECT
