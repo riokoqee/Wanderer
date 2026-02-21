@@ -236,6 +236,14 @@ public class Player extends Entity{
             shotAvailableCounter++;
         }
 
+        if (life > maxLife) {
+            life = maxLife;
+        }
+
+        if (mana > maxMana) {
+            mana = maxMana;
+        }
+
         if (life <= 0) {
             gp.gameState = gp.gameOverState;
             gp.ui.commandNum = -1;
@@ -295,20 +303,30 @@ public class Player extends Entity{
 
         if (i != 999) {
 
-            String text;
+            // PICKUP ONLY ITEMS
+            if (gp.obj[mapNum][i].type == type_pickupOnly) {
 
-            if (inventory.size() != maxInventorySize) {
-
-                inventory.add(gp.obj[mapNum][i]);
-                gp.playSE(1);
-                text = "Got a " + gp.obj[mapNum][i].name + "!";
+                gp.obj[mapNum][i].use(this);
+                gp.obj[mapNum][i] = null;
             }
+
+            // INVENTORY ITEMS
             else {
-                text = "You cannot carry anymore!";
-            }
+                String text;
 
-            gp.ui.addMessage(text);
-            gp.obj[mapNum][i] = null;
+                if (inventory.size() != maxInventorySize) {
+
+                    inventory.add(gp.obj[mapNum][i]);
+                    gp.playSE(1);
+                    text = "Got a " + gp.obj[mapNum][i].name + "!";
+                }
+                else {
+                    text = "You cannot carry anymore!";
+                }
+
+                gp.ui.addMessage(text);
+                gp.obj[mapNum][i] = null;
+            }
         }
     }
 
